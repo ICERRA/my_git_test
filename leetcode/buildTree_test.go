@@ -1,3 +1,4 @@
+// Package decode 该文件下均为树的题目
 package leetcode
 
 import (
@@ -11,7 +12,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// buildTree 前序中序构建二叉树
+// region buildTree 前序中序构建二叉树
 func buildTree(preorder []int, inorder []int) *TreeNode {
 	if len(preorder) == 0 {
 		return nil
@@ -30,6 +31,8 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 
 	return rootNode
 }
+
+//endregion
 
 // region 二叉树的最大深度
 
@@ -79,6 +82,28 @@ func maxDepth1(root *TreeNode) int {
 		deepth++
 	}
 	return deepth
+}
+
+//endregion
+
+// region 二叉搜索树中的第k小元素
+func kthSmallest(root *TreeNode, k int) int {
+	var inorder []int
+	var doFunc func(root *TreeNode)
+	doFunc = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		doFunc(root.Left)
+		inorder = append(inorder, root.Val)
+		doFunc(root.Right)
+	}
+	doFunc(root)
+	if len(inorder) >= k {
+		return inorder[k-1]
+	}
+
+	return 0
 }
 
 //endregion
